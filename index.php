@@ -44,5 +44,9 @@ if(isset($_POST['aggiungi_iscritto'])){
             echo <option value="'$a['id']}>($a['id_membro')}"</option>
         }
     ?>
+
+    <h2>Visualizza corso con più iscritti</h2>
+    <button name="visualizza corso">Visualizza</button>
+    
 </body>
 </html>
