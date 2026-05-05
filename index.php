@@ -1,6 +1,28 @@
 <?php
+include "accesso.php"
 session_start();
 $conn = new mysqli("localhost", "root", "", "roncelli_gym");
 if ($conn->connect_error) {
     die("Errore connessione");
+}
+
+if(isset($_POST['azione']) && $_POST['azione'] == 'login'){
+    $user = $_POST['user'];
+    $password = $_POST['password'];
+
+    $res = $conn->query("SELECT * FROM membri WHERE password = '$password'");
+
+    if($res->num_rows > 0){
+        $user = $res->fetch_assoc();
+
+        if(password_verify($password, $user['password'])){
+            $_SESSION['user'] = $user['user'];
+        }
+    }
+}
+
+if(isset($_POST['aggiungi_iscritto'])){
+    $id_membro=$POST['membro'];
+    $id_corso=$_POST['corso'];
+    
 }
