@@ -47,6 +47,8 @@ if(isset($_POST['aggiungi_iscritto'])){
 
     <h2>Visualizza corso con più iscritti</h2>
     <button name="visualizza corso">Visualizza</button>
-    
+
 </body>
 </html>
+
+
