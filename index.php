@@ -150,6 +150,37 @@ foreach ($corsi as $c) {
 }
 ?>
 
+<h2>Report completo</h2>
+<?php
+$query = "
+SELECT i.nome AS nome_i, i.cognome AS cognome_i,
+       c.nome AS corso,
+       isr.nome AS nome_s, isr.cognome AS cognome_s
+FROM istruttori i
+JOIN corsi c ON i.id = c.id_istruttore
+LEFT JOIN iscritti isr ON c.id = isr.id_corso
+ORDER BY i.cognome, i.nome, c.nome, isr.cognome, isr.nome
+";
+
+$res = $pdo->query($query);
+
+$current = "";
+foreach ($res as $r) {
+    $header = $r['cognome_i'] . " " . $r['nome_i'] . " - " . $r['corso'];
+
+    if ($header != $current) {
+        echo "<h3>$header</h3>";
+        $current = $header;
+    }
+
+    if ($r['nome_s']) {
+        echo "{$r['nome_s']} {$r['cognome_s']}<br>";
+    } else {
+        echo "Nessun iscritto<br>";
+    }
+}
+?>
+
 <?php endif; ?>
 </body>
 </html>
