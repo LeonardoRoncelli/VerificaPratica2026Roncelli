@@ -123,3 +123,33 @@ foreach ($res as $r) {
     echo "{$r['nome']} {$r['cognome']} → {$r['corso']} ({$r['totale']} iscritti)<br>";
 }
 ?>
+<h2>Iscritti per corso</h2>
+<?php
+$corsi = $pdo->query("SELECT * FROM corsi");
+foreach ($corsi as $c) {
+    echo "<h3>{$c['nome']}</h3>";
+
+    $stmt = $pdo->prepare("SELECT * FROM iscritti WHERE id_corso=?");
+    $stmt->execute([$c['id']]);
+
+    foreach ($stmt as $is) {
+        echo "{$is['nome']} {$is['cognome']}
+        <form method='POST' style='display:inline'>
+            <input type='hidden' name='id_iscritto' value='{$is['id']}'>
+            <select name='nuovo_corso'>";
+
+        $allCorsi = $pdo->query("SELECT * FROM corsi");
+        foreach ($allCorsi as $ac) {
+            echo "<option value='{$ac['id']}'>{$ac['nome']}</option>";
+        }
+
+        echo "</select>
+            <button name='cambia'>Cambia corso</button>
+        </form><br>";
+    }
+}
+?>
+
+<?php endif; ?>
+</body>
+</html>
